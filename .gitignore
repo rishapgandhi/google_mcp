@@ -1,0 +1,10 @@
+.env
+*.pyc
+__pycache__/
+.credentials/
+token.json
+client_secret.json
+*.egg-info/
+dist/
+build/
+.venv/
