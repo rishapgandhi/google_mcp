@@ -7,6 +7,9 @@ DRIVE_TOOLS = [
     Tool(name="drive_search", description="Search files in Google Drive", inputSchema={"type": "object", "properties": {"query": {"type": "string", "description": "Drive search query (e.g. name contains 'report')"}, "max_results": {"type": "integer", "default": 10}}, "required": ["query"]}),
     Tool(name="drive_read_file", description="Read content of a Google Drive file (text-based)", inputSchema={"type": "object", "properties": {"file_id": {"type": "string"}}, "required": ["file_id"]}),
     Tool(name="drive_create_file", description="Create a text file in Google Drive", inputSchema={"type": "object", "properties": {"name": {"type": "string"}, "content": {"type": "string"}, "mime_type": {"type": "string", "default": "text/plain"}, "folder_id": {"type": "string", "default": ""}}, "required": ["name", "content"]}),
+    Tool(name="drive_delete_file", description="Delete a file from Google Drive", inputSchema={"type": "object", "properties": {"file_id": {"type": "string"}}, "required": ["file_id"]}),
+    Tool(name="drive_list_folder", description="List files in a Drive folder", inputSchema={"type": "object", "properties": {"folder_id": {"type": "string", "default": "root"}, "max_results": {"type": "integer", "default": 20}}, "required": []}),
+    Tool(name="drive_share_file", description="Share a file with a user (viewer, commenter, writer)", inputSchema={"type": "object", "properties": {"file_id": {"type": "string"}, "email": {"type": "string"}, "role": {"type": "string", "enum": ["reader", "commenter", "writer"], "default": "reader"}}, "required": ["file_id", "email"]}),
 ]
 
 
@@ -48,5 +51,23 @@ async def handle_drive(name: str, args: dict) -> str:
         media = MediaInMemoryUpload(args["content"].encode(), mimetype=args.get("mime_type", "text/plain"))
         f = svc.files().create(body=metadata, media_body=media, fields="id,webViewLink").execute()
         return f"File created: {f.get('webViewLink', f['id'])}"
+
+    elif name == "drive_delete_file":
+        svc.files().delete(fileId=args["file_id"]).execute()
+        return f"File {args['file_id']} deleted"
+
+    elif name == "drive_list_folder":
+        folder_id = args.get("folder_id", "root")
+        q = f"'{folder_id}' in parents and trashed=false"
+        result = svc.files().list(q=q, pageSize=args.get("max_results", 20), fields="files(id,name,mimeType,modifiedTime)").execute()
+        files = result.get("files", [])
+        if not files:
+            return "Folder is empty."
+        return "\n".join(f"ID: {f['id']} | {f['name']} | {f['mimeType']}" for f in files)
+
+    elif name == "drive_share_file":
+        permission = {"type": "user", "role": args.get("role", "reader"), "emailAddress": args["email"]}
+        svc.permissions().create(fileId=args["file_id"], body=permission, sendNotificationEmail=True).execute()
+        return f"Shared {args['file_id']} with {args['email']} as {args.get('role', 'reader')}"
 
     return "Unknown drive tool"

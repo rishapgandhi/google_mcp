@@ -18,15 +18,15 @@ Most Google Workspace MCP servers use third-party wrappers with thousands of lin
 - **Credentials stored locally** with `chmod 600` permissions
 - **No telemetry, no analytics, no SaaS dependency**
 
-## Services & Tools (14 tools)
+## Services & Tools (26 tools)
 
 | Service | Tools | Description |
 |---------|-------|-------------|
-| **Gmail** | `gmail_search`, `gmail_read`, `gmail_send` | Search, read, and send emails |
-| **Calendar** | `calendar_list_events`, `calendar_create_event` | List and create calendar events |
-| **Drive** | `drive_search`, `drive_read_file`, `drive_create_file` | Search, read, and create files |
-| **Docs** | `docs_create`, `docs_read`, `docs_append` | Create, read, and edit documents |
-| **Sheets** | `sheets_read`, `sheets_write`, `sheets_create` | Read, write, and create spreadsheets |
+| **Gmail** | `gmail_search`, `gmail_read`, `gmail_send`, `gmail_reply`, `gmail_list_labels`, `gmail_modify_labels`, `gmail_delete` | Full email management |
+| **Calendar** | `calendar_list_events`, `calendar_create_event`, `calendar_update_event`, `calendar_delete_event`, `calendar_get_event` | Events with invite emails |
+| **Drive** | `drive_search`, `drive_read_file`, `drive_create_file`, `drive_delete_file`, `drive_list_folder`, `drive_share_file` | Files, folders, sharing |
+| **Docs** | `docs_create`, `docs_read`, `docs_append` | Create and edit documents |
+| **Sheets** | `sheets_read`, `sheets_write`, `sheets_create` | Read, write spreadsheets |
 | **Slides** | `slides_create`, `slides_read` | Create and read presentations |
 
 ## Quick Start
