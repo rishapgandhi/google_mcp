@@ -39,7 +39,7 @@ async def handle_calendar(name: str, args: dict) -> str:
             event["description"] = args["description"]
         if args.get("attendees"):
             event["attendees"] = [{"email": e.strip()} for e in args["attendees"].split(",")]
-        created = svc.events().insert(calendarId="primary", body=event).execute()
+        created = svc.events().insert(calendarId="primary", body=event, sendUpdates="all").execute()
         return f"Event created: {created.get('htmlLink')}"
 
     return "Unknown calendar tool"
