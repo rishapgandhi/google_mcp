@@ -4,7 +4,7 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![MCP](https://img.shields.io/badge/MCP-compatible-green.svg)](https://modelcontextprotocol.io/)
 
-**Minimal, secure, self-hosted MCP server for Google Workspace.** Zero third-party wrappers — only official Google libraries. ~300 lines of fully auditable code.
+**Minimal, secure, self-hosted MCP server for Google Workspace.** Zero third-party wrappers — only official Google libraries. ~500 lines of fully auditable code.
 
 Works with **Claude Code**, **Kiro**, **Cursor**, **Windsurf**, **Codex**, **GitHub Copilot**, and any MCP-compatible AI coding agent.
 
@@ -18,7 +18,7 @@ Most Google Workspace MCP servers use third-party wrappers with thousands of lin
 - **Credentials stored locally** with `chmod 600` permissions
 - **No telemetry, no analytics, no SaaS dependency**
 
-## Services & Tools (26 tools)
+## Services & Tools (43 tools)
 
 | Service | Tools | Description |
 |---------|-------|-------------|
@@ -28,6 +28,10 @@ Most Google Workspace MCP servers use third-party wrappers with thousands of lin
 | **Docs** | `docs_create`, `docs_read`, `docs_append` | Create and edit documents |
 | **Sheets** | `sheets_read`, `sheets_write`, `sheets_create` | Read, write spreadsheets |
 | **Slides** | `slides_create`, `slides_read` | Create and read presentations |
+| **Forms** | `forms_create`, `forms_get`, `forms_add_question`, `forms_get_responses` | Create forms, add questions, read responses |
+| **Tasks** | `tasks_list_tasklists`, `tasks_list`, `tasks_create`, `tasks_update`, `tasks_delete` | Manage task lists and tasks |
+| **Chat** | `chat_list_spaces`, `chat_send_message`, `chat_list_messages`, `chat_create_space` | Spaces, messages |
+| **Meet** | `meet_create_space`, `meet_get_space`, `meet_end_conference`, `meet_list_conferences` | Meeting links, conferences |
 
 ## Quick Start
 
@@ -45,6 +49,10 @@ Most Google Workspace MCP servers use third-party wrappers with thousands of lin
    - Google Docs API
    - Google Sheets API
    - Google Slides API
+   - Google Forms API
+   - Google Tasks API
+   - Google Chat API
+   - Google Meet REST API
 
 ### 2. Install
 
@@ -146,7 +154,11 @@ google_mcp/
         ├── drive.py       # Search, read, create files
         ├── docs.py        # Create, read, append
         ├── sheets.py      # Read, write, create
-        └── slides.py      # Create, read
+        ├── slides.py      # Create, read
+        ├── forms.py       # Create forms, add questions, get responses
+        ├── tasks.py       # Task lists, create/update/delete tasks
+        ├── chat.py        # Spaces, send/list messages
+        └── meet.py        # Create meetings, list conferences
 ```
 
 ## Contributing

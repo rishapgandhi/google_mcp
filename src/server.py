@@ -18,10 +18,18 @@ from src.tools.drive import DRIVE_TOOLS, handle_drive
 from src.tools.docs import DOCS_TOOLS, handle_docs
 from src.tools.sheets import SHEETS_TOOLS, handle_sheets
 from src.tools.slides import SLIDES_TOOLS, handle_slides
+from src.tools.forms import FORMS_TOOLS, handle_forms
+from src.tools.tasks import TASKS_TOOLS, handle_tasks
+from src.tools.chat import CHAT_TOOLS, handle_chat
+from src.tools.meet import MEET_TOOLS, handle_meet
 
 app = Server("google-mcp")
 
-ALL_TOOLS = GMAIL_TOOLS + CALENDAR_TOOLS + DRIVE_TOOLS + DOCS_TOOLS + SHEETS_TOOLS + SLIDES_TOOLS
+ALL_TOOLS = (
+    GMAIL_TOOLS + CALENDAR_TOOLS + DRIVE_TOOLS + DOCS_TOOLS
+    + SHEETS_TOOLS + SLIDES_TOOLS + FORMS_TOOLS
+    + TASKS_TOOLS + CHAT_TOOLS + MEET_TOOLS
+)
 
 HANDLERS = {
     **{t.name: handle_gmail for t in GMAIL_TOOLS},
@@ -30,6 +38,10 @@ HANDLERS = {
     **{t.name: handle_docs for t in DOCS_TOOLS},
     **{t.name: handle_sheets for t in SHEETS_TOOLS},
     **{t.name: handle_slides for t in SLIDES_TOOLS},
+    **{t.name: handle_forms for t in FORMS_TOOLS},
+    **{t.name: handle_tasks for t in TASKS_TOOLS},
+    **{t.name: handle_chat for t in CHAT_TOOLS},
+    **{t.name: handle_meet for t in MEET_TOOLS},
 }
 
 
